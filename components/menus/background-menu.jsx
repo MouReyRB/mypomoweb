@@ -1,6 +1,8 @@
 import { Icon } from '@iconify/react';
 import { Button } from "@/components/ui/button";
 import { useGlobalColor } from "@/store/background";
+import { useEffect } from 'react';
+import { firestore } from "@/app/firebase";
 
 const themes = [
   {
@@ -77,8 +79,37 @@ const themes = [
   }
 ];
 
+const setBackgroundPreference = (color) => {
+  // Dapatkan ID pengguna, misalnya dari autentikasi Firebase jika digunakan.
+  const userId = 'USER_ID'; // Ganti dengan cara yang sesuai untuk mendapatkan ID pengguna.
+
+  // Simpan preferensi warna ke Firebase Firestore.
+  firestore.collection('users').doc(userId).set({
+    backgroundColor: color
+  });
+};
+
 const BackgroundMenu = ({ setModal }) => {
   const setGlobalColor = useGlobalColor(state => state.setGlobalColor);
+
+  useEffect(() => {
+    // Dapatkan ID pengguna, misalnya dari autentikasi Firebase jika digunakan.
+    const userId = 'USER_ID'; // Ganti dengan cara yang sesuai untuk mendapatkan ID pengguna.
+
+    // Ambil preferensi warna dari Firebase Firestore.
+    const userRef = firestore.collection('users').doc(userId);
+    userRef.get().then((doc) => {
+      if (doc.exists) {
+        const userData = doc.data();
+        const backgroundColor = userData.backgroundColor;
+        setGlobalColor(backgroundColor);
+      } else {
+        console.log('No such document!');
+      }
+    }).catch((error) => {
+      console.log('Error getting document:', error);
+    });
+  }, []);
 
   return (
     <div
