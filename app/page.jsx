@@ -9,6 +9,7 @@ import Pomodoro from "@/components/pomodoro";
 import { useRecomendations } from "@/store/recomendations";
 import { useMusicPlayed } from "@/store/music-played";
 import { Icon } from "@iconify/react";
+import axios from 'axios';
 
 const Home = () => {
     const globalColor = useGlobalColor((state) => state.globalColor)
@@ -52,39 +53,56 @@ const Home = () => {
         updateLengths();
     }, [choosedRecomendation, updateLengths]);
 
-    // To Do List
-    const [tasks, setTasks] = useState([
-        "Study HTML"
-    ]);
+    const [tasks, setTasks] = useState(["Study HTML"]);
     const [newTask, setNewTask] = useState("");
 
-    const addTask = (task) => {
-        setTasks([...tasks, task]);
+    const addTask = async (task) => {
+        try {
+            console.log("Sending request to add task:", task);
+            const response = await axios.post('https://pomotodolist.azurewebsites.net/api/AddTaskFunction?code=BVln3Wjvh22KveCBvAylK1Ys-LrwTPAGBGCHT3m8dJ46AzFu5qRs9A%3D%3D', { task });
+            console.log("Response received:", response);
+            setTasks([...tasks, task]);
+        } catch (error) {
+            console.error("There was a network error:", error);
+            if (error.response) {
+                console.error("Server responded with status:", error.response.status);
+            }
+        }
     };
 
-    const handleAddTask = (event) => {
+    const handleAddTask = async (event) => {
         event.preventDefault();
         if (newTask.trim() !== "") {
-            addTask(newTask);
+            await addTask(newTask);
             setNewTask("");
         }
     };
 
-    const handleDeleteTask = (index) => {
-        const updatedTasks = tasks.filter((_, i) => i !== index);
-        setTasks(updatedTasks);
-    };
-
-    const handleEditTask = (index) => {
-        const updatedTasks = [...tasks];
-        const newText = prompt("Enter new task", tasks[index]);
-        if (newText !== null) {
-            updatedTasks[index] = newText.trim();
+    const handleDeleteTask = async (index) => {
+        try {
+            console.log("Sending request to delete task:", index);
+            const response = await axios.post('https://pomotodolist.azurewebsites.net/api/DeleteTaskFunction?code=Z-Hfqmh25SDhC_T0NjtmDsqzoZbtVbioytcOoog7Qo1RAzFuMYHINQ%3D%3D', { index });
+            console.log("Response received:", response);
+            const updatedTasks = tasks.filter((_, i) => i !== index);
             setTasks(updatedTasks);
+        } catch (error) {
+            console.error("There was a network error:", error);
         }
     };
 
-    const handleToggleComplete = (index) => {
+    const handleEditTask = async (index) => {
+    const newText = prompt("Enter new task", tasks[index]);
+    if (newText !== null) {
+        await axios.post('https://pomotodolist.azurewebsites.net/api/EditTaskFunction?code=uhzlw0cHwFBkjVdZldAGyg6fWBXaxzwbqFie871L_RYGAzFuQ92omA%3D%3D', { index, newText });
+        const updatedTasks = [...tasks];
+        updatedTasks[index] = newText.trim();
+        setTasks(updatedTasks);
+    }
+};
+
+
+    const handleToggleComplete = async (index) => {
+        await axios.post('https://pomotodolist.azurewebsites.net/api/ToggleCompleteTaskFunction?code=MnhWaq3pvT5PQZiXj6AQbPH5mXJYYvvjCGor25ZaTmu4AzFuKColrg%3D%3D', { index });
         const task = document.getElementById(`task-${index}`);
         if (task.classList.contains('completed')) {
             task.classList.remove('completed');
