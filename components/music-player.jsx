@@ -2,7 +2,6 @@ import { useGlobalColor } from "@/store/background";
 import { useAudioPlayer } from "@/store/audio-player";
 import { useMusicPlayed } from "@/store/music-played";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Separator } from "@/components/ui/separator";
 import { Icon } from "@iconify/react";
 import { Button } from "@/components/ui/button";
 import { storage } from "@/app/firebaseConfig"; // Import storage from firebaseConfig
