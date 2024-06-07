@@ -1,106 +1,116 @@
-import { useGlobalColor } from "@/store/background";
-import { useAudioPlayer } from "@/store/audio-player";
-import { useMusicPlayed } from "@/store/music-played";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Separator } from "@/components/ui/separator";
-import { Icon } from "@iconify/react";
-import { Button } from "@/components/ui/button";
-import { storage } from "@/app/firebaseConfig"; // Import storage from firebaseConfig
-import { ref, getDownloadURL } from "firebase/storage";
-import { useState, useEffect } from "react";
-
-const musicList = [
-    { title: "Light Piano Beat Calm Spring Nature Lofi Vlog _ Rise by Chill Pulse", path: "music/1.mp3" },
-    { title: "massobeats - honey jam", path: "music/2.mp3" },
-    { title: "Artificial.Music - And So It Begins", path: "music/3.mp3" },
-    { title: "'Dreamy Mode' cute background music", path: "music/4.mp3" },
-    { title: "massobeats - aromatic", path: "music/5.mp3" },
-    { title: "massobeats - bloom", path: "music/6.mp3" },
-    { title: "massobeats - breeze", path: "music/7.mp3" },
-    { title: "massobeats - chamomile", path: "music/8.mp3" },
-    { title: "massobeats - drizzle", path: "music/9.mp3" },
-    { title: "massobeats - floral", path: "music/10.mp3" },
-    { title: "massobeats - gift", path: "music/11.mp3" },
-    { title: "massobeats - hillside", path: "music/12.mp3" },
-    { title: "massobeats - jasmine tea", path: "music/13.mp3" },
-    { title: "massobeats - lavender", path: "music/14.mp3" },
-    { title: "massobeats - lotus", path: "music/15.mp3" },
-    { title: "massobeats - lucid", path: "music/16.mp3" },
-    { title: "massobeats - mango tea", path: "music/17.mp3" },
-    { title: "massobeats - midnight", path: "music/18.mp3" },
-    { title: "massobeats - noon", path: "music/19.mp3" },
-    { title: "massobeats - peach prosecco", path: "music/20.mp3" },
-    { title: "massobeats - rose water", path: "music/21.mp3" },
-    { title: "massobeats - serenity", path: "music/22.mp3" },
-    { title: "massobeats - taro swirl", path: "music/23.mp3" },
-    { title: "massobeats - warmth", path: "music/24.mp3" },
-    { title: "'Mushroom's Life' cute background music", path: "music/25.mp3" }
-];
+import {Icon} from "@iconify/react";
+import {useGlobalColor} from "@/store/background";
+import {useAudioPlayer} from "@/store/audio-player";
+import {useMusicPlayed} from "@/store/music-played";
+import {useState} from "react";
 
 const MusicPlayer = () => {
-    const globalColor = useGlobalColor((state) => state.globalColor);
-    const audioPlayer = useAudioPlayer((state) => state.audioPlayer);
-    const setAudioPlayer = useAudioPlayer((state) => state.setAudioPlayer);
-    const musicPlayed = useMusicPlayed((state) => state.musicPlayed);
-    const setMusicPlayed = useMusicPlayed((state) => state.setMusicPlayed);
-    const setIsMusicPlayed = useMusicPlayed((state) => state.setIsMusicPlayed);
-    const isMusicPlayed = useMusicPlayed((state) => state.isMusicPlayed);
-    const [musicUrls, setMusicUrls] = useState({});
+    const globalColor = useGlobalColor((state) => state.globalColor)
+    const audioPlayer = useAudioPlayer((state) => state.audioPlayer)
+    const musicPlayed = useMusicPlayed((state) => state.musicPlayed)
+    const [isMusicPaused, setIsMusicPaused] = useState(false)
+    const setIsMusicPlayed = useMusicPlayed((state) => state.setIsMusicPlayed)
+    const [volume, setVolume] = useState(33)
 
-    useEffect(() => {
-        const fetchUrls = async () => {
-            const urls = {};
-            for (const item of musicList) {
-                const musicRef = ref(storage, item.path);
-                urls[item.path] = await getDownloadURL(musicRef);
-            }
-            setMusicUrls(urls);
-        };
-        fetchUrls();
-    }, []);
-
-    const playMusic = async (item) => {
-        const url = musicUrls[item.path];
-        if (audioPlayer && musicPlayed === item) {
-            audioPlayer.pause();
-            audioPlayer.currentTime = 0;
-            setAudioPlayer(null);
-            setIsMusicPlayed(false);
+    const togglePlayPause = () => {
+        if (audioPlayer.paused) {
+            setIsMusicPaused(false)
+            audioPlayer.play();
         } else {
-            if (audioPlayer && musicPlayed !== item) {
-                audioPlayer.pause();
-                audioPlayer.currentTime = 0;
-            }
-            const newAudioPlayer = new Audio(url);
-            newAudioPlayer.play();
-            setAudioPlayer(newAudioPlayer);
-            setMusicPlayed(item);
-            setIsMusicPlayed(true);
+            setIsMusicPaused(true)
+            audioPlayer.pause();
         }
+    }
+
+    const closeMusicPlayer = () => {
+        // audioPlayer.pause();
+        audioPlayer.currentTime = 0;
+        setIsMusicPlayed(false)
+    }
+
+    const backward10sec = () => {
+        audioPlayer.currentTime -= 10
+    }
+
+    const forward10sec = () => {
+        audioPlayer.currentTime += 10
+    }
+    const setVolumeValue = (value) => {
+        setVolume(value);
+        audioPlayer.volume = value / 100;
     };
 
     return (
-        <div className="transition-all h-3/4 w-full md:h-1/2 fixed flex-col top-10 right-0 md:w-1/3 bg-secondary rounded-l-lg p-5 space-y-5 text-slate-700">
-            <div className="flex justify-between items-center">
-                <Icon icon="material-symbols-light:music-note-rounded" className="text-2xl" />
-                <p>Music Player</p>
-                <Button variant="ghost" onClick={() => setModal(null)}>
-                    <Icon icon="material-symbols-light:close-rounded" className="text-2xl" />
-                </Button>
-            </div>
-            <ScrollArea className="h-3/4 w-full border rounded-lg border-slate-300">
-                <div className="p-4">
-                    {musicList.map((item, index) => (
-                        <div key={index} onClick={() => playMusic(item)} className="text-sm flex justify-between cursor-pointer hover:bg-slate-200 items-center p-2 rounded-lg">
-                            {item.title}
-                            <Icon icon={`material-symbols-light:${isMusicPlayed && musicPlayed.path === item.path ? 'stop-rounded' : 'play-arrow-rounded'}`} className="text-xl" />
-                        </div>
-                    ))}
-                    <Separator className="my-2" />
+        <div
+            className="absolute bottom-0 md:bottom-10 left-0 md:left-10 w-full md:w-1/3 h-fit bg-white rounded-lg z-50 flex flex-col p-5 justify-center gap-5">
+            <div>
+                <div
+                    className="flex justify-end group cursor-pointer"
+                    onClick={() => closeMusicPlayer()}
+                >
+                    <Icon icon="material-symbols-light:close-small-outline-rounded"
+                          className="text-black text-3xl group-hover:text-red-600"/>
                 </div>
-            </ScrollArea>
-        </div>
-    );
-};
 
-export default MusicPlayer;
+                <div className="text-black text-center text-sm">
+                    <p>{musicPlayed.title}</p>
+                </div>
+            </div>
+            <div className="items-center justify-center gap-10 flex">
+                <div
+                    className="p-2 rounded-lg cursor-pointer"
+                    style={{backgroundColor: `#${globalColor}`}}
+                    onClick={() => backward10sec()}
+                >
+                    <Icon icon="material-symbols-light:replay-10-rounded"
+                          className={`text-3xl`}
+                    />
+                </div>
+                {
+                    isMusicPaused ? (
+                        <div
+                            className="p-2 rounded-lg cursor-pointer"
+                            style={{backgroundColor: `#${globalColor}`}}
+                            onClick={() => togglePlayPause()}
+                        >
+                            <Icon icon="material-symbols-light:play-arrow-rounded"
+                                  className={`text-5xl`}
+                            />
+                        </div>
+                    ) : (
+                        <div
+                            className="p-2 rounded-lg cursor-pointer"
+                            style={{backgroundColor: `#${globalColor}`}}
+                            onClick={() => togglePlayPause()}
+                        >
+                            <Icon icon="material-symbols-light:pause"
+                                  className={`text-5xl`}
+                            />
+                        </div>
+                    )
+                }
+                <div
+                    className="p-2 rounded-lg cursor-pointer"
+                    style={{backgroundColor: `#${globalColor}`}}
+                    onClick={() => forward10sec()}
+                >
+                    <Icon icon="material-symbols-light:forward-10-rounded"
+                          className={`text-3xl`}
+                    />
+                </div>
+            </div>
+            <div className="flex items-center gap-2 text-black">
+                <div>
+                    <Icon className="text-2xl" style={{color: `#${globalColor}`}} icon="mdi:volume-low"/>
+                </div>
+                <input type="range" min="0" max="100" onChange={(value) => setVolumeValue(value.target.value)}
+                       className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"/>
+                <div>
+                    <Icon className="text-2xl" style={{color: `#${globalColor}`}} icon="mdi:volume-high"/>
+                </div>
+            </div>
+        </div>
+    )
+}
+
+export default MusicPlayer
