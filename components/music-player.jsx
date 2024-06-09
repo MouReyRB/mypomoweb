@@ -94,9 +94,7 @@ const MusicPlayer = () => {
 
   return (
     <div
-      className={`absolute bottom-0 md:bottom-10 left-0 md:left-10 w-full md:w-1/3 bg-white rounded-lg z-50 flex flex-col p-5 justify-center gap-5 transition-opacity duration-500 ${
-        isScrolling || !isTop ? "opacity-0 animate-fadeOut" : "opacity-100 animate-fadeIn"
-      }`}
+      className={`absolute bottom-0 md:bottom-10 left-0 md:left-10 w-full md:w-1/3 bg-white rounded-lg z-50 flex flex-col p-5 justify-center gap-5 transition-opacity duration-500`}
       style={{ maxHeight: isMinimized ? "50px" : "fit-content" }}
     >
       <div>
