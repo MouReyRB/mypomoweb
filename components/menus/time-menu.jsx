@@ -78,7 +78,7 @@ const TimeMenu = ({
 
     const submit = async () => {
         try {
-            const response = await fetch('https://pomotodolist.azurewebsites.net/api/UpdateTimeSettings?code=Kaq4s4VWew9at7w14vHo6jccxb6db4X0dOtRwubIXkGNAzFuKJ2TZg%3D%3D', {
+            const response = await fetch(`https://pomotodolist.azurewebsites.net/api/UpdateTimeSettings?code=${process.env.NEXT_PUBLIC_AZURE_UPDATE_TIME_FUNCTION_KEY}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

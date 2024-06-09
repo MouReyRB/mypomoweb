@@ -14,7 +14,7 @@ const ToDoList = () => {
     const addTask = async (task) => {
         try {
             console.log("Sending request to add task:", task);
-            const response = await axios.post('https://pomotodolist.azurewebsites.net/api/AddTaskFunction?code=BVln3Wjvh22KveCBvAylK1Ys-LrwTPAGBGCHT3m8dJ46AzFu5qRs9A%3D%3D', { task });
+            const response = await axios.post(`https://pomotodolist.azurewebsites.net/api/AddTaskFunction?code=${process.env.NEXT_PUBLIC_AZURE_ADD_TASK_FUNCTION_KEY}`, { task });
             console.log("Response received:", response);
             setTasks([...tasks, task]);
         } catch (error) {
@@ -36,7 +36,7 @@ const ToDoList = () => {
     const handleDeleteTask = async (index) => {
         try {
             console.log("Sending request to delete task:", index);
-            const response = await axios.post('https://pomotodolist.azurewebsites.net/api/DeleteTaskFunction?code=Z-Hfqmh25SDhC_T0NjtmDsqzoZbtVbioytcOoog7Qo1RAzFuMYHINQ%3D%3D', { index });
+            const response = await axios.post(`https://pomotodolist.azurewebsites.net/api/DeleteTaskFunction?code=${process.env.NEXT_PUBLIC_AZURE_DELETE_TASK_FUNCTION_KEY}`, { index });
             console.log("Response received:", response);
             const updatedTasks = tasks.filter((_, i) => i !== index);
             setTasks(updatedTasks);
@@ -48,7 +48,7 @@ const ToDoList = () => {
     const handleEditTask = async (index) => {
     const newText = prompt("Enter new task", tasks[index]);
     if (newText !== null) {
-        await axios.post('https://pomotodolist.azurewebsites.net/api/EditTaskFunction?code=uhzlw0cHwFBkjVdZldAGyg6fWBXaxzwbqFie871L_RYGAzFuQ92omA%3D%3D', { index, newText });
+        await axios.post(`https://pomotodolist.azurewebsites.net/api/EditTaskFunction?code=${process.env.NEXT_PUBLIC_AZURE_EDIT_TASK_FUNCTION_KEY}`, { index, newText });
         const updatedTasks = [...tasks];
         updatedTasks[index] = newText.trim();
         setTasks(updatedTasks);
@@ -57,7 +57,7 @@ const ToDoList = () => {
 
 
     const handleToggleComplete = async (index) => {
-        await axios.post('https://pomotodolist.azurewebsites.net/api/ToggleCompleteTaskFunction?code=MnhWaq3pvT5PQZiXj6AQbPH5mXJYYvvjCGor25ZaTmu4AzFuKColrg%3D%3D', { index });
+        await axios.post(`https://pomotodolist.azurewebsites.net/api/ToggleCompleteTaskFunction?code=${process.env.NEXT_PUBLIC_AZURE_TOGGLE_COMPLETE_TASK_FUNCTION_KEY}`, { index });
         const task = document.getElementById(`task-${index}`);
         if (task.classList.contains('completed')) {
             task.classList.remove('completed');
