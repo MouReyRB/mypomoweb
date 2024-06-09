@@ -43,7 +43,7 @@ const Pomodoro = ({
     ]
 
     const callNextSequence = async (lengthChoosed, pomodoroCustomSequence) => {
-        const response = await fetch(`https://pomotodolist.azurewebsites.net/api/nextSequence?code=${process.env.NEXT_PUBLIC_AZURE_NXT_SEQUENCE_FUNCTION_KEY}`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_AZURE_NXT_SEQUENCE_FUNCTION_KEY}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -58,7 +58,7 @@ const Pomodoro = ({
     };
 
     const callPreviousSequence = async (lengthChoosed, pomodoroSequence) => {
-        const response = await fetch(`https://pomotodolist.azurewebsites.net/api/previousSequence?code=${process.env.NEXT_PUBLIC_AZURE_PREV_SEQUENCE_FUNCTION_KEY}`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_AZURE_PREV_SEQUENCE_FUNCTION_KEY}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

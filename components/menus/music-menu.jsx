@@ -20,7 +20,7 @@ const MusicMenu = ({ setModal }) => {
     useEffect(() => {
         const fetchMusicList = async () => {
             try {
-                const response = await fetch(`https://pomotodolist.azurewebsites.net/api/playMusic?code=${process.env.NEXT_PUBLIC_AZURE_MUSIC_FUNCTION_KEY}==`);
+                const response = await fetch(`${process.env.NEXT_PUBLIC_AZURE_MUSIC_FUNCTION_KEY}==`);
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
