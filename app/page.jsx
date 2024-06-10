@@ -105,7 +105,7 @@ const Home = () => {
                             effectively.</p>
                     </div>
                     <div className="space-y-2 text-sm text-gray-500 dark:text-gray-400">
-                        <h1 className="text-3xl">how to use pomoweb ?</h1>
+                        <h1 className="text-3xl">How to use pomoweb ?</h1>
                         <p style={{ textAlign: 'justify' }}>You can use this website to help you implement the Pomodoro technique. This website also
                             offers several features that can assist you.</p>
                     </div>
