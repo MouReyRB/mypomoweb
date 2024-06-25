@@ -1,6 +1,5 @@
 'use client'
 
-import Menus from "@/components/menus";
 import { useGlobalColor } from "@/store/background";
 import { useState } from "react";
 import axios from 'axios';
@@ -28,8 +27,16 @@ const ToDoList = () => {
     const handleAddTask = async (event) => {
         event.preventDefault();
         if (newTask.trim() !== "") {
-            await addTask(newTask);
-            setNewTask("");
+            try {
+                console.log("Adding new task:", newTask);
+                setTasks([...tasks, newTask]);
+                setNewTask(""); // Reset input setelah menambahkan task
+    
+                // Tambahkan proses async untuk request ke server jika diperlukan
+                // await addTask(newTask);
+            } catch (error) {
+                console.error("Failed to add task:", error);
+            }
         }
     };
 
