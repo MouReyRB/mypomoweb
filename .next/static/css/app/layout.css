@@ -2760,3 +2760,86 @@ video {
 .\[\&_tr\]\:border-b tr {
   border-bottom-width: 1px;
 }
+/*!**************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[12].oneOf[12].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[12].oneOf[12].use[3]!./node_modules/@fontsource/inter/latin.css ***!
+  \**************************************************************************************************************************************************************************************************************************************************************************************/
+/* inter-latin-100-normal */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100;
+  src: url(/_next/static/media/inter-latin-100-normal.8f32322d.woff2) format('woff2'), url(/_next/static/media/inter-latin-100-normal.8412f11b.woff) format('woff');
+}
+
+/* inter-latin-200-normal */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 200;
+  src: url(/_next/static/media/inter-latin-200-normal.2f57baa9.woff2) format('woff2'), url(/_next/static/media/inter-latin-200-normal.25a12b69.woff) format('woff');
+}
+
+/* inter-latin-300-normal */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 300;
+  src: url(/_next/static/media/inter-latin-300-normal.1e64cb66.woff2) format('woff2'), url(/_next/static/media/inter-latin-300-normal.80c26b3a.woff) format('woff');
+}
+
+/* inter-latin-400-normal */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url(/_next/static/media/inter-latin-400-normal.ac374088.woff2) format('woff2'), url(/_next/static/media/inter-latin-400-normal.779487c6.woff) format('woff');
+}
+
+/* inter-latin-500-normal */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 500;
+  src: url(/_next/static/media/inter-latin-500-normal.7d0979cc.woff2) format('woff2'), url(/_next/static/media/inter-latin-500-normal.70ff6a80.woff) format('woff');
+}
+
+/* inter-latin-600-normal */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 600;
+  src: url(/_next/static/media/inter-latin-600-normal.34227eb1.woff2) format('woff2'), url(/_next/static/media/inter-latin-600-normal.edaa5f1b.woff) format('woff');
+}
+
+/* inter-latin-700-normal */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 700;
+  src: url(/_next/static/media/inter-latin-700-normal.eb892c4c.woff2) format('woff2'), url(/_next/static/media/inter-latin-700-normal.cc2a1044.woff) format('woff');
+}
+
+/* inter-latin-800-normal */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 800;
+  src: url(/_next/static/media/inter-latin-800-normal.f15de3ac.woff2) format('woff2'), url(/_next/static/media/inter-latin-800-normal.7da978cc.woff) format('woff');
+}
+
+/* inter-latin-900-normal */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 900;
+  src: url(/_next/static/media/inter-latin-900-normal.2a92465d.woff2) format('woff2'), url(/_next/static/media/inter-latin-900-normal.ce5a1df0.woff) format('woff');
+}

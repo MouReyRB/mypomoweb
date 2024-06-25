@@ -91,15 +91,16 @@ const BackgroundMenu = ({ setModal }) => {
           <Icon icon="material-symbols-light:close-rounded" className="text-2xl" />
         </Button>
       </div>
-      {themes.map((theme, index) => (
-        <div key={index} className="grid grid-cols-5 gap-3 w-full">
-          {theme.color.map((color, index) => (
+      {themes.map((theme, themeIndex) => (
+        <div key={themeIndex} className="grid grid-cols-5 gap-3 w-full">
+          {theme.color.map((color, colorIndex) => (
             <Button
-              key={index}
+              key={colorIndex}
               variant="ghost"
               className="w-full h-10 rounded-full"
               onClick={() => setGlobalColor(color)}
               style={{ backgroundColor: `#${color}` }}
+              data-testid={`color-button-${themeIndex}-${colorIndex}`} // Tambahkan data-testid sesuai dengan index
             />
           ))}
         </div>

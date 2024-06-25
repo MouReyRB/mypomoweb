@@ -8,25 +8,6 @@ import {useEffect, useState} from "react";
 import {Switch} from "@/components/ui/switch";
 import {useSequence} from "@/store/sequence";
 
-const recomendationItems = [
-    {
-        label: "Sport",
-        value: "sport"
-    },
-    {
-        label: "Short Cooking",
-        value: "short-cooking"
-    },
-    {
-        label: "Long Cooking",
-        value: "long-cooking"
-    },
-    {
-        label: "Excercise",
-        value: "excercise"
-    }
-]
-
 const TimeMenu = ({
                       focusLength,
                       shortBreakLength,

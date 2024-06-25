@@ -144,18 +144,17 @@ const Pomodoro = ({
                     )
                 }
             </p>
-            <AnimatePresence mode="wait">
-                <motion.div
-                    key={lengthChoosed}
-                    className="text-7xl md:text-9xl font-semibold text-center relative"
-                    initial={{opacity: 0, x: '35%'}}
-                    animate={{opacity: 1, x: 0}}
-                    exit={{opacity: 0, x: '-35%'}}
-                    transition={{duration: 0.5}}
-                >
-                    <h1>{formatTime(time[0])}</h1>
-                    <h1>{formatTime(time[1])}</h1>
-                </motion.div>
+            <AnimatePresence mode="wait"><motion.div
+    key={lengthChoosed}
+    className="text-7xl md:text-9xl font-semibold text-center relative"
+    initial={{opacity: 0, x: '35%'}}
+    animate={{opacity: 1, x: 0}}
+    exit={{opacity: 0, x: '-35%'}}
+    transition={{duration: 0.5}}
+>
+    <h1>{time && formatTime(time[0])}</h1>
+    <h1>{time && formatTime(time[1])}</h1>
+</motion.div>
             </AnimatePresence>
 
             <div
@@ -205,7 +204,8 @@ const Pomodoro = ({
             <div className="flex gap-5 items-center justify-between">
                 <div
                     onClick={() => setIsCounting(!isCounting)}
-                    className={`py-2 rounded-xl w-40 flex justify-center bg-white hover:bg-slate-300 cursor-pointer`}>
+                    className={`py-2 rounded-xl w-40 flex justify-center bg-white hover:bg-slate-300 cursor-pointer`}
+                    data-testid="play-button">
                     <Icon icon={`material-symbols-light:${isCounting ? 'pause' : 'play-arrow-rounded'}`}
                           className={`text-5xl transition`}
                           style={{color: `#${globalColor}`}}

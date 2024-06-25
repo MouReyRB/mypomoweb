@@ -1,6 +1,6 @@
 import {Inter as FontSans} from 'next/font/google'
 import './global.css'
-
+import '@fontsource/inter/latin.css';
 import {ThemeProvider} from "@/components/theme-provider";
 import {cn} from "@/lib/utils";
 
